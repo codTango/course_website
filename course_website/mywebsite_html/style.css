@@ -34,8 +34,10 @@ html{
 
 h1{
 	text-align: right;
-	margin:0 25px;
+	margin:0 auto;
+	padding: 0 20px;
 	color:#79BD9A;
+	max-width: 1000px;
 }
 
 .header{
@@ -46,9 +48,10 @@ h1{
 
 
 .navigation{
+	max-width: 1000px;
 	width: 100%;
 	text-align:right;
-	margin-top: 9px;
+	margin: 0 auto;
 }
 
 /*-- menu --*/
@@ -85,12 +88,18 @@ h1{
 }
 
 
+.main-box{
+	width:100%;
+	margin: 0 auto;
+	align-items: center;
+	text-align: center;
+}
+
 #schedule{
 	opacity: 0.7;
 	width: 100%;
-    height: auto;
-    margin: 0px 0px;
-    border-width: 5%;
-    padding: 0px 20px;
+	max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 20px;
     box-sizing: border-box;
 }
