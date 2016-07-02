@@ -1,0 +1,99 @@
+<!--
+Author: Angelica Yunshu Li
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{{title}}</title>
+	<style type="text/css">
+		html{
+			background-color:#28474C;
+			font-family: Verdana, Geneva, sans-serif;
+			/*Optima, Segoe, 'Segoe UI', Candara, Calibri, Arial, sans-serif;*/
+		}
+
+		h1{
+			text-align: right;
+			margin:0 auto;
+			padding: 0 20px;
+			color:#79BD9A;
+			max-width: 1000px;
+		}
+
+		.header{
+			padding: 0px 20px;
+			margin-bottom: 25px;
+			align-items: center;
+		}
+
+
+		.navigation{
+			max-width: 1000px;
+			width: 100%;
+			text-align:right;
+			margin: 0 auto;
+		}
+
+		/*-- menu --*/
+		.navigation span{
+			display:none;
+		}
+		/*-- //menu --*/
+
+
+		.navigation ul{
+			background-color:#3B8686;
+			list-style-type: none;
+			padding:0;
+			margin:0;
+			overflow: hidden;
+		}
+
+		.navigation ul li{
+			float:left;
+			/*display: inline-block;*/
+		}
+
+		.navigation ul li a{
+			display: block;
+			font-size: 100%;
+			color:#A8DBA8;
+			text-align: center;
+			text-decoration: none;
+			padding: 14px 16px;
+		}
+
+		.navigation ul li a:hover,.navigation ul li a.active{
+			background-color:#327070;
+		}
+
+
+		.main-box{
+			width:100%;
+			margin: 0 auto;
+			align-items: center;
+			text-align: center;
+		}
+
+		#schedule{
+			opacity: 0.7;
+			width: 100%;
+			max-width: 1040px;
+		    margin: 0 auto;
+		    padding: 0 20px;
+		    box-sizing: border-box;
+		}
+
+	</style>
+
+
+<body>
+<!-- content -->
+<div class="content">
+{% block content %}
+
+{% endblock %}
+</div>
+</body>
