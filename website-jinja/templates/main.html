@@ -1,76 +1,10 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<!DOCTYPE html>
-<html>
-<head>
-	<title>{{title}}</title>
-	<!--fonts-->
-		<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-	<!--//fonts-->
-		<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-		<link href="css/mainstyle.css" rel="stylesheet" type="text/css" media="all" />
-	<!-- for-mobile-apps -->
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-	<!-- //for-mobile-apps -->
-	<!-- js -->
-		<script type="text/javascript" src="js/jquery.min.js"></script>
-	<!-- js -->
+{% extends "base.html" %}
+{% block box %}
+    <button class="hvr-rectangle-out">DONE!</button>
+    <button name="update" class="hvr-rectangle-out">DONE!</button>
+    <button name="update" class="hvr-rectangle-out" type="submit" value="Submit">DONE!</button>
 
-</head>
-<body>
-<!-- content -->
-<div class="content">
-	<div class="container">
-		<div class="header">
-			<div class="navigation">
-				<span class="menu"><img src="images/menu.png" alt=""/></span>
-					<ul class="nav1">
-						<li><a class="active" href="#">HOME</a></li>
-						{% if courses %}
-							{% for course in courses %}
-							<li><a href="#">{{ course.upper() }}</a></li>
-							{% endfor %}
-						{% endif %}
-					</ul>
-								<!-- script for menu -->
-									<script> 
-										$( "span.menu" ).click(function() {
-										$( "ul.nav1" ).slideToggle( 300, function() {
-										 // Animation complete.
-										});
-										});
-									</script>
-								<!-- //script for menu -->
+{% endblock %}
 
-			</div>
-			<div class="clearfix"></div>
-		</div>
-		<div class="content-top">
-			<div class="wrap">
-				<div class="col-md-5 content-left">
-					<h1>Blocky UI Kit</h1>
-					<div class="border"></div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-					Nulla volutpat sed quam ut luctus. In hac habitasse platea dictumst. 
-					Donec id purus elit. Suspendisse eget felis nec mauris placerat convallis.</p>
-					<a href="#" class="hvr-rectangle-out button">GET STARTED</a>
-					<a href="#"class="hvr-rectangle-in button more-mar">MORE INFO</a>
-				</div>
-				
-				<div class="clearfix"></div>
-			</div>
-		</div>
-		
 
-	</div>
-</div>
-	
-<!-- //content -->
-</body>
-</html>
+
