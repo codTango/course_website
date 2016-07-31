@@ -1,7 +1,7 @@
 <!--
 Author: Angelica Yunshu Li
 -->
-
+{#@TODO: $({{ active }}).addClass("active")#}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +13,7 @@ Author: Angelica Yunshu Li
 	<script type="text/javascript"></script-->
 </head>
 
+
 <body>
 <!-- content -->
 <div class="content">
@@ -21,7 +22,7 @@ Author: Angelica Yunshu Li
 		<div class="header">
 			<div class="navigation">
 						<ul class='nav'>
-							<li><a class="{{ homeactive }}" href="#">HOME</a></li>
+							<li><a class="{{home}}" href="#">HOME</a></li>
 							{% if courses %}
 								{% for course in courses %}
 									<li><a href="#">{{ course.upper() }}</a></li>

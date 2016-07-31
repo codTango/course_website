@@ -47,7 +47,7 @@ class Handler(webapp2.RequestHandler):
 	def get_ck(self,cookie):
 		return self.request.cookies.get(cookie)
 
-	def load(self,page,user):
+	def load(self,page,user,url='/'):
 		courseinfo = (json.loads(user.courseinfo) if user.courseinfo else {})
 		courses=(json.loads(user.courses) if user.courses else [])
 		name=user.name
@@ -65,7 +65,7 @@ class MainHandler(Handler):
 				ck = text_hash(user.userid)
 				self.set_ck(str("id=%s"%ck))
 				#title = "%s's Fall 2016"%user.name
-				self.redirect('/%s'%userid)
+				self.redirect('/%s'%uid)
 			else:
 				self.render('signup.html',loginerror='Invalid username and/or password.',loginactive=True)
 		elif 'signup' in self.request.POST:

@@ -149,7 +149,7 @@ input.url {
     border: none;
     margin: 10px 10px;
     height: 100%;
-    width: 100%;
+    width: 130%;
     padding: 5px 5px;
     background-color: #294035;
     -webkit-transition: width 0.4s ease-in-out;
@@ -157,7 +157,7 @@ input.url {
 }
 
 input.url:focus {
-    width: 150%;
+    width: 200%;
 }
 
 
