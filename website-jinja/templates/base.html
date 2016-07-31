@@ -31,9 +31,10 @@ Author: Angelica Yunshu Li
 							{% if courses %}
 								{% for course in courses %}
                                     {%  set course=course.upper() %}
-									<li><a id="{{course}}" href="/{{user.userid +'/'+ course.upper() }}">{{ course.upper() }}</a></li>
+									<li><a id="{{course}}" href="/{{user.userid +'/'+ course }}">{{ course }}</a></li>
 								{% endfor %}
 							{% endif %}
+                            <li><a id="settings" href="/{{user.userid}}/settings">SETTINGS</a></li>
 						</ul>
 			</div>
 		</div>

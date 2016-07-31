@@ -90,7 +90,7 @@ class UserHandler(Handler):
 	def get(self,userid):
 		user = query_id(userid)[0]
 		if user.courses:
-			self.load('main.html', user,active='home')
+			self.load('main.html', user)
 		else:
 			self.redirect('/%s/settings'%userid)
 
@@ -106,7 +106,7 @@ class CourseHandler(Handler):
 class SettingsHandler(Handler):
 	def get(self,userid):
 		user = query_id(userid)[0]
-		self.load('setup.html',user= user)
+		self.load('setup.html',user= user,active="settings")
 	def post(self,userid):
 		user = query_id(userid)[0]
 		if 'setup' in self.request.POST:		# new user (first time setup)
