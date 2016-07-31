@@ -47,11 +47,11 @@ class Handler(webapp2.RequestHandler):
 	def get_ck(self,cookie):
 		return self.request.cookies.get(cookie)
 
-	def load(self,page,user,url='/'):
+	def load(self,page,user,active='home'):
 		courseinfo = (json.loads(user.courseinfo) if user.courseinfo else {})
 		courses=(json.loads(user.courses) if user.courses else [])
 		name=user.name
-		self.render(page,user=user,name=name,courses=courses,courseinfo=courseinfo)
+		self.render(page,user=user,name=name,courses=courses,courseinfo=courseinfo,active=active)
 
 class MainHandler(Handler):
 	def get(self):
@@ -90,10 +90,17 @@ class UserHandler(Handler):
 	def get(self,userid):
 		user = query_id(userid)[0]
 		if user.courses:
-			self.load('main.html', user)
+			self.load('main.html', user,active='home')
 		else:
 			self.redirect('/%s/settings'%userid)
 
+class CourseHandler(Handler):
+	def get(self,userid,courseid):
+		user = query_id(userid)[0]
+		if user.courses:
+			self.load('main.html', user,active=courseid)
+		else:
+			self.redirect('/%s/settings'%userid)
 
 
 class SettingsHandler(Handler):
@@ -108,6 +115,7 @@ class SettingsHandler(Handler):
 			# update user.courseinfo
 			courseinfo = {}
 			for course in user.courses:
+				courseinfo[course] = {}
 				courseinfo[course] = {}
 			user.courseinfo = json.dumps(courseinfo)
 			# commit updated user
@@ -125,6 +133,6 @@ class SettingsHandler(Handler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler), webapp2.Route('/<userid>',UserHandler),webapp2.Route('/<userid>/settings',SettingsHandler)
+    ('/', MainHandler), webapp2.Route('/<userid>',UserHandler),webapp2.Route('/<userid>/settings',SettingsHandler),webapp2.Route('/<userid>/<courseid>',CourseHandler)
 
 ], debug=True)
