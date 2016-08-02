@@ -7,20 +7,26 @@
 	<form name="update" method="post">
 {#    @TODO: add course#}
 		{% for course in courses %}
-			<h2>{{course.upper()}}</h2>
-			<table  align="center">
+            <h2>{{course.upper()}}<span class="right"><img src="/images/edit.png" class="icon"><img src="/images/delete.png" class="icon"></span></h2>
+			<table align="center" border="0">
+
 {#            @TODO: add button#}
                 {% for name,title in [('website','Course Website'),('hw','Homework'),('calendar','Calendar'),('syllabus','Syllabus')] %}
                     <tr>
-                    <td>{{ title }}</td>
-                    <td align="center"><input class="url" name="{{ name }}" placeholder="{{ title + ' URL' }}" text="{{courseinfo.get(course)}}"/></td>
+                    <td class="delete btn" align="right"><img src="/images/delete.png" class="icon"/></td>
+                    <td class="title">{{ title }}</td>
+                    <td align="left" class="url"><input class="url" name="{{ course+' '+name }}" placeholder="{{ title + ' URL' }}" text="{{courseinfo.get(course).get(name)}}"/></td>
                     </tr>
                 {% endfor %}
+                    <tr>
+                    <td class="add btn" align="right"><img src="/images/add.png" class="icon"/></td>
+                    </tr>
+
             </table>
 		{% endfor %}
         <br>
 		
-		<button name="update" class="hvr-rectangle-out" type="submit" value="Submit">DONE!</button>
+		<button name="update" class="hvr-rectangle-out btn" type="submit" value="Submit">DONE!</button>
 	</form>
 
 
@@ -45,6 +51,9 @@
 		<button name="setup" class="hvr-rectangle-out" type="submit" value="Submit">NEXT</button>
 	</form>
 	{% endif %}
+
+
+    <script type="text/javascript" src="/js/settings.js"></script>
 
 
 

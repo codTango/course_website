@@ -143,13 +143,25 @@ button{
     margin:5px;
 }
 
+input {
+    color: #67b3a3;
+    font-size: medium;
+    border: none;
+    margin: 10px 10px;
+    height: 100%;
+    width: 100px;
+    padding: 5px 5px;
+    background-color: #294035;
+}
+
+
 input.url {
     color: #67b3a3;
     font-size: medium;
     border: none;
     margin: 10px 10px;
     height: 100%;
-    width: 130%;
+    width: 300px;
     padding: 5px 5px;
     background-color: #294035;
     -webkit-transition: width 0.4s ease-in-out;
@@ -157,9 +169,47 @@ input.url {
 }
 
 input.url:focus {
-    width: 200%;
+    width: 400px;
 }
 
+img.icon {
+    width: 15px;
+    height: 15px;
+}
+
+td.title {
+    width: 20%;
+}
+
+td.course-title {
+    width: 200px;
+}
+
+td.add {
+    padding-top: 15px;
+}
+
+td.delete {
+    width: 10%;
+}
+
+.btn,.icon {
+    cursor: pointer;
+    cursor: hand;
+}
+
+button.add {
+    width:10%;
+    height:5%;
+}
+
+span.right {
+    margin-left: 50px;
+}
+
+img.icon {
+    margin-right: 10px;
+}
 
 
 .hvr-rectangle-out {

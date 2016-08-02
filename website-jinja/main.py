@@ -102,7 +102,6 @@ class CourseHandler(Handler):
 		else:
 			self.redirect('/%s/settings'%userid)
 
-
 class SettingsHandler(Handler):
 	def get(self,userid):
 		user = query_id(userid)[0]
@@ -111,11 +110,11 @@ class SettingsHandler(Handler):
 		user = query_id(userid)[0]
 		if 'setup' in self.request.POST:		# new user (first time setup)
 			# update user.courses
-			user.courses = json.dumps(self.request.get('course-list').split())
+			courses = self.request.get('course-list').split()
+			user.courses = json.dumps(courses)
 			# update user.courseinfo
 			courseinfo = {}
-			for course in user.courses:
-				courseinfo[course] = {}
+			for course in courses:
 				courseinfo[course] = {}
 			user.courseinfo = json.dumps(courseinfo)
 			# commit updated user
@@ -123,6 +122,8 @@ class SettingsHandler(Handler):
 			# reload page
 			self.load('setup.html', user = user)
 		elif 'update' in self.request.POST:		# not first time
+			for course in json.loads(user.courses):
+				pass
 			# @TODO: add update function
 			self.write("update request")
 

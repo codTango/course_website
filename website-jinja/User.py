@@ -5,7 +5,7 @@ class Course(ndb.Model):
 	subject = ndb.StringProperty()
 	number = ndb.IntegerProperty()
 	website = ndb.JsonProperty()	#{"www.coursesite.com":3,"www.subsite.com":1} records numbers of time people choose it
-	hw = ndb.JsonProperty()
+	homework = ndb.JsonProperty()
 	calendar = ndb.JsonProperty()
 	grades = ndb.JsonProperty()
 	syllabus = ndb.JsonProperty()
@@ -18,8 +18,6 @@ class User(ndb.Model):
 	courses = ndb.JsonProperty()
 	courseinfo = ndb.JsonProperty()	#overwrite default info; "empty" if user doesn't want it
 	joined_time = ndb.DateTimeProperty(auto_now_add=True)
-
-
 
 ########### validation #####################
 import hashlib
