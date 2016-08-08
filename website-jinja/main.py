@@ -21,6 +21,7 @@ import sys
 #sys.path.append(r'C:\Users\Angelica Yunshu Li\Documents\HERE\Projects\course_website\website-jinja\templates\py')
 from User import *
 import json
+from webapp2_extras import routes
 
 FOLDERNAME = "templates" 	# only for self.render(template)   e.g. html files
 
@@ -129,11 +130,15 @@ class SettingsHandler(Handler):
 
 		else:
 			self.write("nothing?")
-			
 
+
+class SubdomainHandler(Handler):
+	def get(self,subdomain):
+		self.write("my spot yay!\n")
+		self.write(subdomain)
 
 
 app = webapp2.WSGIApplication([
+routes.DomainRoute('<subdomain>.kiwi-ninja.appspot.com',[webapp2.Route('/',handler=SubdomainHandler),webapp2.Route('/sub',handler=SubdomainHandler)]),
     ('/', MainHandler), webapp2.Route('/<userid>',UserHandler),webapp2.Route('/<userid>/settings',SettingsHandler),webapp2.Route('/<userid>/<courseid>',CourseHandler)
-
 ], debug=True)
