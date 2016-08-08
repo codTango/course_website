@@ -139,6 +139,6 @@ class SubdomainHandler(Handler):
 
 
 app = webapp2.WSGIApplication([
-routes.DomainRoute('<subdomain>.kiwi-ninja.appspot.com',[webapp2.Route('/',handler=SubdomainHandler),webapp2.Route('/sub',handler=SubdomainHandler)]),
+routes.DomainRoute('<userid>.kiwi-ninja.appspot.com',[webapp2.Route('/',handler=UserHandler),webapp2.Route('/settings',handler=SettingsHandler),webapp2.Route('/<courseid>',CourseHandler]),
     ('/', MainHandler), webapp2.Route('/<userid>',UserHandler),webapp2.Route('/<userid>/settings',SettingsHandler),webapp2.Route('/<userid>/<courseid>',CourseHandler)
 ], debug=True)
