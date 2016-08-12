@@ -1,32 +1,49 @@
 {% extends 'base.html' %}
-
+{% set default_info_list = ['Course Website','Homework','Calendar','Syllabus'] %}
 
 {% block box %}
 
 {#	{% if courses %}#}
 	<form name="update" method="post">
-
         <section>
             <h1 class="section-title">Courses</h1>
-            <div class="section-add">Add Course</div>
-{#      @TODO: add course button#}
-            {% for course in courses %}
-                <h2>{{course.upper()}}<span class="right"><img src="/images/edit.png" class="icon"><img src="/images/delete.png" class="icon"></span></h2>
-                <table align="center" border="0">
-
-    {#            @TODO: add button#}
-                    {% for name,title in [('website','Course Website'),('hw','Homework'),('calendar','Calendar'),('syllabus','Syllabus')] %}
+            <div class="section-add hvr-rectangle-out btn" id="add-course">Add Course</div>
+            {%  if not courses %}
+                <table class="clear" align="center">
+                    <tr>
+                        <td></td>
+                        <td class="title">Course ID</td>
+                        <td align="left" class="url"><input placeholder="e.g. CS125"></td>
+                    </tr>
+                    {% for title in default_info_list %}
                         <tr>
-                        <td class="delete btn" align="right"><img src="/images/delete.png" class="icon"/></td>
-                        <td class="title">{{ title }}</td>
-                        <td align="left" class="url"><input class="url" name="{{ course+' '+name }}" placeholder="{{ title + ' URL' }}" text="{{courseinfo.get(course).get(name)}}"/></td>
+                            <td class="delete btn" align="right"><img src="/images/delete.png" class="icon"/></td>
+                            <td class="title">{{ title }}</td>
+                            <td align="left" class="url"><input class="url" placeholder="{{ title + ' URL' }}" /></td>
                         </tr>
                     {% endfor %}
                         <tr>
-                        <td class="add btn" align="right"><img src="/images/add.png" class="icon"/></td>
+                            <td class="add btn" align="right"><img src="/images/add.png" class="icon"/></td>
                         </tr>
-
                 </table>
+            {% endif %}
+            {% for course in courses %}
+                <div class="clear">
+                    <h2>{{course.upper()}}<span class="right"><img src="/images/edit.png" class="icon"><img src="/images/delete.png" class="icon"></span></h2>
+                    <table align="center" border="0">
+        {#            @TODO: add button#}
+                        {% for title in default_info_list %}
+                            <tr>
+                            <td class="delete btn" align="right"><img src="/images/delete.png" class="icon"/></td>
+                            <td class="title">{{ title }}</td>
+                            <td align="left" class="url"><input class="url" placeholder="{{ title + ' URL' }}"/></td>
+                            </tr>
+                        {% endfor %}
+                            <tr>
+                            <td class="add btn" align="right"><img src="/images/add.png" class="icon"/></td>
+                            </tr>
+                    </table>
+                </div>
             {% endfor %}
         </section>
         <div class="clear">

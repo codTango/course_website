@@ -209,6 +209,8 @@ td.delete {
 
 .clear {
     clear:both;
+    margin-top: 10px;
+    margin-bottom:10px;
 }
 
 
@@ -219,6 +221,8 @@ button.add {
 
 .section-add{
     float: right;
+    padding: 10px 20px;
+    margin: 5px 5px;
 }
 
 span.right {
@@ -231,6 +235,7 @@ img.icon {
 
 
 .hvr-rectangle-out {
+    color:white;
   display: inline-block;
   vertical-align: middle;
   -webkit-transform: translateZ(0);
@@ -240,7 +245,7 @@ img.icon {
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
-	background:#2d5a5a;
+    background:#2d5a5a;
   -webkit-transition-property: color;
   transition-property: color;
   -webkit-transition-duration: 0.3s;
