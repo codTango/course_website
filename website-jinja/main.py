@@ -120,10 +120,28 @@ class SettingsHandler(Handler):
 		# 	# reload page
 		# 	self.load('setup.html', user = user)
 		if 'update' in self.request.POST:		# not first time
-			for course in json.loads(user.courseinfo):
-				pass
+			args = self.request.arguments()
+			total = len(filter(lambda x:"course" in x, args))
+			btn_args = filter(lambda x: "btn" in x and "url" not in x, args)
+			courseinfo = {}
+			for i in range(total):
+				courseID = self.request.get("course%d"%i)
+				if courseID:
+					btns = {}
+					btn_lst = filter(lambda x: "btn%d"%i in x, btn_args)
+					for btn in btn_lst:
+						btn_name = self.request.get(btn)
+						btn_url = self.request.get(btn.replace("btn","btn_url"))
+
+						if btn_name and btn_url:
+							btns[btn_name]=btn_url
+					courseinfo[courseID]=btns
+			user.courseinfo = json.dumps(courseinfo)
+			user.put()
+			self.write(user.courseinfo)
+
 			# @TODO: add update function
-			self.write("update request")
+
 
 		else:
 			self.write("nothing?")

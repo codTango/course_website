@@ -11,15 +11,17 @@
             {%  if not courses %}
                 <table class="clear" align="center">
                     <tr>
-                        <td></td>
+                        <td><input type="hidden" name="new" value="0"></td>
                         <td class="title">Course ID</td>
-                        <td align="left" class="url"><input placeholder="e.g. CS125"></td>
+                        <td align="left" class="url"><input name="course0" placeholder="e.g. CS125"></td>
                     </tr>
-                    {% for title in default_info_list %}
+                    {% for i in range(4) %}
+                        {% set title=default_info_list[i] %}
                         <tr>
+                            <input type="hidden" name="bid0-{{ i }}" value="{{i}}">
                             <td class="delete btn" align="right"><img src="/images/delete.png" class="icon"/></td>
-                            <td class="title">{{ title }}</td>
-                            <td align="left" class="url"><input class="url" placeholder="{{ title + ' URL' }}" /></td>
+                            <td class="title">{{ title }}<input type="hidden" name="btn0-{{i}}" value="{{ title }}"></td>
+                            <td align="left" class="url"><input class="url" name="btn_url0-{{ i }}"placeholder="{{ title + ' URL' }}" /></td>
                         </tr>
                     {% endfor %}
                         <tr>
@@ -31,6 +33,7 @@
                 <div class="clear">
                     <h2>{{course.upper()}}<span class="right"><img src="/images/edit.png" class="icon"><img src="/images/delete.png" class="icon"></span></h2>
                     <table align="center" border="0">
+                        <td><input type="hidden" name="new"></td>
         {#            @TODO: add button#}
                         {% for title in default_info_list %}
                             <tr>
