@@ -40,6 +40,13 @@ h1{
 	max-width: 1000px;
 }
 
+.section-title{
+    text-align: left;
+    margin: 10px 10px;
+    color: #08283b;
+    float:left;
+}
+
 .header{
 	padding: 0px 20px;
 	margin-bottom: 25px;
@@ -193,14 +200,25 @@ td.delete {
     width: 10%;
 }
 
+
+
 .btn,.icon {
     cursor: pointer;
     cursor: hand;
 }
 
+.clear {
+    clear:both;
+}
+
+
 button.add {
     width:10%;
     height:5%;
+}
+
+.section-add{
+    float: right;
 }
 
 span.right {
