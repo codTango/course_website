@@ -49,7 +49,26 @@ $(document).ready(function(){
     });
 
     /*TODO: edit courseid*/
-    /*TODO: delete course*/
+    $("section").on("click","img.edit",function(){
+        var courseid = $(this).text();
+        var h2 = $(this).parent().parent();
+        // $(h2).contents().filter(function(){              //to remove text only
+        //     return this.nodeType === 3;
+        // }).remove();
+        $(h2).before();//TODO: add input box
+        $(h2).remove();
+
+
+
+    });
+
+    /*delete course*/
+    $("section").on("click","img.delete",function(){
+        var div = $(this).parent().parent().parent();
+        $(div).fadeOut().remove();
+    });
+
+
     /* add course*/
     // add new course function
     if(document.getElementsByName("course0")){

@@ -108,18 +108,7 @@ class SettingsHandler(Handler):
 		self.load('setup.html',user= user,active="settings")
 	def post(self,userid):
 		user = query_id(userid)[0]
-		# if 'setup' in self.request.POST:		# new user (first time setup)
-		# 	user.courses = json.dumps(courses)
-		# 	# update user.courseinfo
-		# 	courseinfo = {}
-		# 	for course in courses:
-		# 		courseinfo[course] = {}
-		# 	user.courseinfo = json.dumps(courseinfo)
-		# 	# commit updated user
-		# 	user.put()
-		# 	# reload page
-		# 	self.load('setup.html', user = user)
-		if 'update' in self.request.POST:		# not first time
+		if 'update' in self.request.POST:
 			args = self.request.arguments()
 			total = len(filter(lambda x:"course" in x, args))
 			btn_args = filter(lambda x: "btn" in x and "url" not in x, args)
@@ -138,10 +127,7 @@ class SettingsHandler(Handler):
 					courseinfo[courseID]=btns
 			user.courseinfo = json.dumps(courseinfo)
 			user.put()
-			self.write(user.courseinfo)
-
-			# @TODO: add update function
-
+			self.redirect("/%s"%userid)
 
 		else:
 			self.write("nothing?")
