@@ -49,10 +49,9 @@ class Handler(webapp2.RequestHandler):
 		return self.request.cookies.get(cookie)
 
 	def load(self,page,user,active='home'):
-		courseinfo = (json.loads(user.courseinfo) if user.courseinfo else {})
-		courses=(json.loads(user.courses) if user.courses else [])
+		courses = (json.loads(user.courseinfo) if user.courseinfo else {})
 		name=user.name
-		self.render(page,user=user,name=name,courses=courses,courseinfo=courseinfo,active=active)
+		self.render(page,user=user,name=name,courses=courses,active=active)
 
 class MainHandler(Handler):
 	def get(self):
@@ -90,7 +89,7 @@ class MainHandler(Handler):
 class UserHandler(Handler):
 	def get(self,userid):
 		user = query_id(userid)[0]
-		if user.courses:
+		if user.courseinfo:
 			self.load('main.html', user)
 		else:
 			self.redirect('/%s/settings'%userid)
@@ -98,7 +97,7 @@ class UserHandler(Handler):
 class CourseHandler(Handler):
 	def get(self,userid,courseid):
 		user = query_id(userid)[0]
-		if user.courses:
+		if user.courseinfo:
 			self.load('main.html', user,active=courseid)
 		else:
 			self.redirect('/%s/settings'%userid)
@@ -109,21 +108,19 @@ class SettingsHandler(Handler):
 		self.load('setup.html',user= user,active="settings")
 	def post(self,userid):
 		user = query_id(userid)[0]
-		if 'setup' in self.request.POST:		# new user (first time setup)
-			# update user.courses
-			courses = self.request.get('course-list').split()
-			user.courses = json.dumps(courses)
-			# update user.courseinfo
-			courseinfo = {}
-			for course in courses:
-				courseinfo[course] = {}
-			user.courseinfo = json.dumps(courseinfo)
-			# commit updated user
-			user.put()
-			# reload page
-			self.load('setup.html', user = user)
-		elif 'update' in self.request.POST:		# not first time
-			for course in json.loads(user.courses):
+		# if 'setup' in self.request.POST:		# new user (first time setup)
+		# 	user.courses = json.dumps(courses)
+		# 	# update user.courseinfo
+		# 	courseinfo = {}
+		# 	for course in courses:
+		# 		courseinfo[course] = {}
+		# 	user.courseinfo = json.dumps(courseinfo)
+		# 	# commit updated user
+		# 	user.put()
+		# 	# reload page
+		# 	self.load('setup.html', user = user)
+		if 'update' in self.request.POST:		# not first time
+			for course in json.loads(user.courseinfo):
 				pass
 			# @TODO: add update function
 			self.write("update request")
