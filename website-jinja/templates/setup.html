@@ -1,53 +1,61 @@
 {% extends 'base.html' %}
-{% set default_info_list = ['Course Website','Homework','Calendar','Syllabus'] %}
+{% set default_info_list = ['Course Website','Homework','Calendar','Syllabus','Grades'] %}
 
 {% block box %}
 
-{#	{% if courses %}#}
+
 	<form name="update" method="post">
-        <section>
+        <section name="course-section">
             <h1 class="section-title">Courses</h1>
             <div class="section-add hvr-rectangle-out btn" id="add-course">Add Course</div>
             {%  if not courses %}
                 <table class="clear" align="center">
                     <tr>
-                        <td><input type="hidden" name="new" value="0"></td>
+                        <td></td>
                         <td class="title">Course ID</td>
                         <td align="left" class="url"><input name="course0" placeholder="e.g. CS125"></td>
                     </tr>
-                    {% for i in range(4) %}
+                    {% for i in range(default_info_list.length) %}
                         {% set title=default_info_list[i] %}
                         <tr>
                             <input type="hidden" name="bid0-{{ i }}" value="{{i}}">
                             <td class="delete btn" align="right"><img src="/images/delete.png" class="icon"/></td>
                             <td class="title">{{ title }}<input type="hidden" name="btn0-{{i}}" value="{{ title }}"></td>
-                            <td align="left" class="url"><input class="url" name="btn_url0-{{ i }}"placeholder="{{ title + ' URL' }}" /></td>
+                            <td align="left" class="url"><input class="url" name="btn_url0-{{ i }}" placeholder="{{ title + ' URL' }}" /></td>
                         </tr>
                     {% endfor %}
                         <tr>
                             <td class="add btn" align="right"><img src="/images/add.png" class="icon"/></td>
                         </tr>
                 </table>
+            {% else %}
+                {% set i=0 %}
+                {% for course in courses %}
+                    {% set urls=courses[course] %}
+                    <div class="clear">
+                        <h2>{{course.upper()}}
+                            <span class="right"><img src="/images/edit.png" class="edit icon"><img src="/images/delete.png" class="delete icon"></span>
+                            <input type="hidden" name="course{{ i }}" value="{{ course.upper() }}">
+                        </h2>
+                        <table align="center" border="0">
+            {#            @TODO: add button#}
+                            {% set btni=0 %}
+                            {% for title in urls %}
+                                <tr>
+                                <td class="delete btn" align="right"><img src="/images/delete.png" class="icon"/></td>
+                                <td class="title">{{ title }}<input type="hidden" name="btn{{ i }}-{{ btni }}" value="{{ title }}"></td>
+                                <td align="left" class="url"><input name="btn_url{{ i }}-{{ btni }}" class="url" value="{{ urls[title] }}"/></td>
+                                </tr>
+                                {% set btni=1+btni %}
+                            {% endfor %}
+                            {% set i= 1+i %}
+                                <tr>
+                                <td class="add btn" align="right"><img src="/images/add.png" class="icon"/></td>
+                                </tr>
+                        </table>
+                    </div>
+                {% endfor %}
             {% endif %}
-            {% for course in courses %}
-                <div class="clear">
-                    <h2>{{course.upper()}}<span class="right"><img src="/images/edit.png" class="edit icon"><img src="/images/delete.png" class="delete icon"></span></h2>
-                    <table align="center" border="0">
-                        <td><input type="hidden" name="new"></td>
-        {#            @TODO: add button#}
-                        {% for title in default_info_list %}
-                            <tr>
-                            <td class="delete btn" align="right"><img src="/images/delete.png" class="icon"/></td>
-                            <td class="title">{{ title }}</td>
-                            <td align="left" class="url"><input class="url" placeholder="{{ title + ' URL' }}"/></td>
-                            </tr>
-                        {% endfor %}
-                            <tr>
-                            <td class="add btn" align="right"><img src="/images/add.png" class="icon"/></td>
-                            </tr>
-                    </table>
-                </div>
-            {% endfor %}
         </section>
         <div class="clear">
 		    <button name="update" class="hvr-rectangle-out btn" type="submit" value="Submit">DONE!</button>

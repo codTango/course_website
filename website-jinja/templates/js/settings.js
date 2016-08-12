@@ -16,21 +16,29 @@ if (!String.prototype.format) {
 
 
 
-
-
-
-
 $(document).ready(function(){
 
 
     /* add url row */
-    var new_row = "<tr> \
-                    <td class='delete btn' align='right'><img src='/images/delete.png' class='icon'/></td>\
-                    <td class='title'><input name='new-btn'></td>\
-                    <td align='left' class='url'><input class='url' name='new-btn-url' text='{{courseinfo.get(course).get(name)}}'/></td>\
-                    </tr>";
     $("section").on("click","td.add",function(){
         var row = $(this).parent();
+        var last_btn = $(row).prev().children(":last").children();
+        if(last_btn.length>0) {
+            console.log(last_btn);
+            var last_btn_number = last_btn.attr("name").slice(7).split("-");
+            var new_btn_number = last_btn_number[0] + "-" + (last_btn_number[1] + 1);
+        }else{
+            var course_number = $(row).parent().parent().prev().children(":last").attr("name").slice(6);
+
+            console.log($(row).parent().parent());
+            //
+            var new_btn_number = course_number+"-"+0;
+        }
+        var new_row = "<tr> \
+                    <td class='delete btn' align='right'><img src='/images/delete.png' class='icon'/></td>\
+                    <td class='title'><input name='btn{0}'></td>\
+                    <td align='left' class='url'><input class='url' name='btn_url{0}' text='{{courseinfo.get(course).get(name)}}'/></td>\
+                    </tr>".format(new_btn_number);
         $(row).before(new_row);
     });
 
@@ -50,14 +58,19 @@ $(document).ready(function(){
 
     /*TODO: edit courseid*/
     $("section").on("click","img.edit",function(){
-        var courseid = $(this).text();
-        var h2 = $(this).parent().parent();
+        var input = $(this).parent().next();
+        var input_value = $(input).attr("value");
+        var input_name = $(input).attr("name");
+        var h2 = $(input).parent();
         // $(h2).contents().filter(function(){              //to remove text only
         //     return this.nodeType === 3;
         // }).remove();
-        $(h2).before();//TODO: add input box
+        $(h2).next().prepend('<tr> \
+                        <td></td> \
+                        <td class="title">Course ID</td> \
+                        <td align="left" class="url"><input name="{0}" value="{1}"></td> \
+                    </tr>'.format(input_name,input_value));
         $(h2).remove();
-
 
 
     });
@@ -71,12 +84,8 @@ $(document).ready(function(){
 
     /* add course*/
     // add new course function
-    if(document.getElementsByName("course0")){
-        var new_course_id = 1;
-    }else{
-        var new_course_id = 0;
-    }
-    var default_info_list = ['Course Website','Homework','Calendar','Syllabus'];
+    var new_course_id = document.getElementsByTagName("table").length;
+    var default_info_list = ['Course Website','Homework','Calendar','Syllabus','Grades'];
     function new_course() {
         var new_course = '<table class="clear" align="center"> \
             <tr> \
