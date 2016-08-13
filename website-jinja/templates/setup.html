@@ -68,9 +68,9 @@
             <div class="clear">
                 <h3>Upload a screenshot of your schedule</h3>
                     <label for="imgInp" class="custom-file-upload btn">
-                         Custom Upload
+                         Choose Image
                     </label>
-                    <input type='file' name="scheduleImage" id="imgInp"/>
+                    <input type='file' name="scheduleImage" id="imgInp" accept="image/*"/>
                     {% if user.schedule %}
                         <img id="schedule" class="clear" src="/img?img_id={{ user.key.urlsafe() }}" alt="schedule screenshot" />
                     {% else %}
