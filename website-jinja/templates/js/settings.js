@@ -15,6 +15,9 @@ if (!String.prototype.format) {
 
 
 $(document).ready(function () {
+    $("#popup").show();
+    // TODO: post to login api
+    // TODO: set rememberme cookie
 
     /* add url row */
     $("section").on("click", "td.add", function () {

@@ -11,7 +11,6 @@
     {#  schedule picture for home page   #}
     {% elif active=="home" %}
         {% if user.schedule %}
-            {#      TODO: image size control #}
             <img src="/img?img_id={{ user.key.urlsafe() }}" id="schedule" alt="schedule image">
         {% endif %}
 
