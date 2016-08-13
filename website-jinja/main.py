@@ -23,6 +23,7 @@ from User import *
 import json
 from webapp2_extras import routes
 
+
 FOLDERNAME = "templates" 	# only for self.render(template)   e.g. html files
 
 
@@ -128,7 +129,11 @@ class SettingsHandler(Handler):
 			user.courseinfo = json.dumps(courseinfo)
 			user.put()
 			self.redirect("/%s"%userid)
-
+		elif 'upload' in self.request.POST:
+			img = str(self.request.get("scheduleImage"))
+			user.schedule = img
+			user.put()
+			self.redirect('/img?img_id=%s'%user.key.urlsafe())
 		else:
 			self.write("nothing?")
 
@@ -138,8 +143,18 @@ class SubdomainHandler(Handler):
 		self.write("my spot yay!\n")
 		self.write(subdomain)
 
+class Image(webapp2.RequestHandler):
+	def get(self):
+		user_key = ndb.Key(urlsafe=self.request.get('img_id'))
+		user = user_key.get()
+		if user.schedule:
+			self.response.headers['Content-Type'] = 'image/png'
+			self.response.out.write(user.schedule)
+		else:
+			self.response.out.write('No image')
+
 
 app = webapp2.WSGIApplication([
 routes.DomainRoute('<userid>.kiwi-ninja.appspot.com',[webapp2.Route('/',handler=UserHandler),webapp2.Route('/settings',handler=SettingsHandler),webapp2.Route('/<courseid>',CourseHandler)]),
-    ('/', MainHandler), webapp2.Route('/<userid>',UserHandler),webapp2.Route('/<userid>/settings',SettingsHandler),webapp2.Route('/<userid>/<courseid>',CourseHandler)
+	('/', MainHandler), ('/img',Image),webapp2.Route('/<userid>',UserHandler),webapp2.Route('/<userid>/settings',SettingsHandler),webapp2.Route('/<userid>/<courseid>',CourseHandler)
 ], debug=True)

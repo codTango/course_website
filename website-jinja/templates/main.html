@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 {% block box %}
 {#    @TODO: button for each url#}
-    {% if active %}
+    {% if active and active!="home" %}
         {% set urls = courses[active]  %}
         {% for btn in urls %}
             {% set url = url if "http" in urls[btn] else "https://"+urls[btn] %}
             <button class="hvr-rectangle-out" onclick="window.open('{{url }}');">{{ btn }}</button>
         {% endfor %}
+    {% elif active=="home" %}
+        {% if user.schedule %}
+            <img src="/img?img_id={{ user.key.urlsafe() }}" alt="schedule image">
+        {% endif %}
+
     {% endif %}
 {% endblock %}
 

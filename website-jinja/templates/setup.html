@@ -62,6 +62,27 @@
         </div>
 	</form>
 
+    <form name="upload" method="post" enctype="multipart/form-data">
+        <section name="schedule-section">
+            <h1 class="section-title">Schedule</h1>
+            <div class="clear">
+                <h3>Upload a screenshot of your schedule</h3>
+                    <input type='file' name="scheduleImage" id="imgInp"/>
+                    {% if user.schedule %}
+                        <img id="schedule" src="/img?img_id={{ user.key.urlsafe() }}" alt="schedule screenshot" />
+                    {% else %}
+                        <img id="schedule" type="hidden" src="#" alt="schedule screenshot"/>
+                    {% endif %}
+                    <button name="upload" class="hvr-rectangle-out" type="submit">UPLOAD</button>
+            </div>
+
+
+        </section>
+    </form>
+
+
+
+
 
 {#	{% else %}#}
 {#        @TODO: modify courses setup and remove this section#}

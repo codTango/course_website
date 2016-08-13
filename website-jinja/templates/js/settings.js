@@ -16,7 +16,9 @@ if (!String.prototype.format) {
 
 
 
+
 $(document).ready(function(){
+    if (document)
 
 
     /* add url row */
@@ -24,14 +26,10 @@ $(document).ready(function(){
         var row = $(this).parent();
         var last_btn = $(row).prev().children(":last").children();
         if(last_btn.length>0) {
-            console.log(last_btn);
             var last_btn_number = last_btn.attr("name").slice(7).split("-");
             var new_btn_number = last_btn_number[0] + "-" + (last_btn_number[1] + 1);
         }else{
             var course_number = $(row).parent().parent().prev().children(":last").attr("name").slice(6);
-
-            console.log($(row).parent().parent());
-            //
             var new_btn_number = course_number+"-"+0;
         }
         var new_row = "<tr> \
@@ -40,6 +38,10 @@ $(document).ready(function(){
                     <td align='left' class='url'><input class='url' name='btn_url{0}' text='{{courseinfo.get(course).get(name)}}'/></td>\
                     </tr>".format(new_btn_number);
         $(row).before(new_row);
+        var col = $(row).prev().children()[1];
+        var focusbox = $(col).children("input");
+        console.log(focusbox);
+        focusbox.focus();
     });
 
     /* detele url row */
@@ -89,9 +91,9 @@ $(document).ready(function(){
     function new_course() {
         var new_course = '<table class="clear" align="center"> \
             <tr> \
-                <td><input type="hidden" name="new" value="{{}}"></td> \
+                <td><input type="hidden" name="new" value="{0}"></td> \
                 <td class="title">Course ID</td> \
-                <td align="left" class="url"><input name="course1" placeholder="e.g. CS125"></td> \
+                <td align="left" class="url"><input class="new-course" name="course{0}" placeholder="e.g. CS125"></td> \
             </tr>'.format(new_course_id);
         for(i=0; i<default_info_list.length;i++) {
             var title = default_info_list[i];
@@ -111,7 +113,28 @@ $(document).ready(function(){
 
     $("#add-course").click(function(){
         $(this).after(new_course());
+        var focusbox = document.getElementsByClassName("new-course")[0];
+        focusbox.focus();
+
     })
+
+    /* image upload */
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#schedule').attr('src', e.target.result);
+                $('#schedule').show();
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function(){
+        readURL(this);
+    });
 
 
 });

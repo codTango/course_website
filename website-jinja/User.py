@@ -15,6 +15,7 @@ class User(ndb.Model):
 	userid = ndb.StringProperty(required=True)
 	email = ndb.StringProperty(required=True)
 	password = ndb.StringProperty(required=True)
+	schedule = ndb.BlobProperty()
 	courseinfo = ndb.JsonProperty()	# {course1:{"Course Website":"www.xxx.com","Homework":"hw.com"}, course2:{...}}
 	joined_time = ndb.DateTimeProperty(auto_now_add=True)
 
