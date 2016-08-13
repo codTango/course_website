@@ -67,11 +67,14 @@
             <h1 class="section-title">Schedule</h1>
             <div class="clear">
                 <h3>Upload a screenshot of your schedule</h3>
+                    <label for="imgInp" class="custom-file-upload btn">
+                         Custom Upload
+                    </label>
                     <input type='file' name="scheduleImage" id="imgInp"/>
                     {% if user.schedule %}
-                        <img id="schedule" src="/img?img_id={{ user.key.urlsafe() }}" alt="schedule screenshot" />
+                        <img id="schedule" class="clear" src="/img?img_id={{ user.key.urlsafe() }}" alt="schedule screenshot" />
                     {% else %}
-                        <img id="schedule" type="hidden" src="#" alt="schedule screenshot"/>
+                        <img id="schedule" class="clear" type="hidden" src="#" alt="schedule screenshot"/>
                     {% endif %}
                     <button name="upload" class="hvr-rectangle-out" type="submit">UPLOAD</button>
             </div>

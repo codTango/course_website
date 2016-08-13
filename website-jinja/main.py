@@ -125,7 +125,6 @@ class SettingsHandler(Handler):
                     for btn in btn_lst:
                         btn_name = self.request.get(btn)
                         btn_url = self.request.get(btn.replace("btn", "btn_url"))
-
                         if btn_name and btn_url:
                             btns[btn_name] = btn_url
                     courseinfo[courseID] = btns
@@ -136,7 +135,7 @@ class SettingsHandler(Handler):
             img = str(self.request.get("scheduleImage"))
             user.schedule = img
             user.put()
-            self.redirect('/img?img_id=%s' % user.key.urlsafe())
+            self.redirect('/%s'%userid)
         else:
             self.write("nothing?")
 

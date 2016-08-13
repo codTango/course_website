@@ -232,6 +232,20 @@ img.icon {
     margin-right: 10px;
 }
 
+img#schedule {
+    margin: 5px 5px;
+    width: 100%;
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    display: inline-block;
+    background: #073c43;
+    padding: 6px 12px;
+    color: lightblue;
+}
 
 .hvr-rectangle-out {
     color:white;
