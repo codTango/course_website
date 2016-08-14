@@ -56,8 +56,11 @@ def valid_id(HASH):
 
 ########## login/signup #####################
 def query_id(uid):
-	qry = User.query().filter(User.userid == uid)
-	return qry.fetch()
+	try:
+		qry = User.query().filter(User.userid == uid)
+		return qry.fetch()[0]
+	except:
+		raise Exception('User not found')
 
 def query_email(em):
 	qry = User.query().filter(User.email == em)

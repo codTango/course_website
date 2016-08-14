@@ -70,6 +70,8 @@ class MainHandler(Handler):
                     user.rememberme = ck
                     user.put()
                     self.set_ck(str("rememberme=%s" % ck))
+                else:
+                    pass # TODO: session cookie
                 self.load("setup.html",user=user,active="settings")
             else:
                 self.render('signup.html', loginerror='Invalid username and/or password.', page="login")
@@ -83,10 +85,6 @@ class MainHandler(Handler):
             else:
                 user_key = signup(name, uid, email, pw)
                 if user_key:
-                    user = user_key.get()
-                    ck = text_hash(user.userid)
-                    self.set_ck(str("id=%s" % ck))
-                    userurl = '/' + user.userid
                     self.redirect('/%s' % uid)
         else:
             self.write("???")
@@ -94,7 +92,7 @@ class MainHandler(Handler):
 
 class UserHandler(Handler):
     def get(self, userid):
-        user = query_id(userid)[0]
+        user = query_id(userid)
         if user.courseinfo:
             self.load('main.html', user)
         else:
@@ -103,7 +101,7 @@ class UserHandler(Handler):
 
 class CourseHandler(Handler):
     def get(self, userid, courseid):
-        user = query_id(userid)[0]
+        user = query_id(userid)
         if user.courseinfo:
             self.load('main.html', user, active=courseid)
         else:
@@ -112,7 +110,7 @@ class CourseHandler(Handler):
 
 class SettingsHandler(Handler):
     def get(self, userid):
-        user = query_id(userid)[0]
+        user = query_id(userid)
         if int(self.get_ck("rememberme"))==user.rememberme:
             self.load('setup.html', user=user, active="settings")
         else:
@@ -120,7 +118,7 @@ class SettingsHandler(Handler):
 
 
     def post(self, userid):
-        user = query_id(userid)[0]
+        user = query_id(userid)
         if 'update' in self.request.POST:       # update courseinfo
             args = self.request.arguments()
             total = len(filter(lambda x: "course" in x, args))
