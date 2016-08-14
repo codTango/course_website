@@ -175,4 +175,29 @@ textarea {
 .forgot {
   margin-top: -20px;
   text-align: right;
+  float:right;
 }
+
+.clear {
+    clear:both;
+    padding: 20px 0px;
+}
+
+input[type="checkbox"].rememberme {
+  display: inline;
+  width:15px;
+  height:15px;
+  margin: 2px 2px;
+}
+
+a.rememberme {
+  margin-top: -20px;
+  float:left;
+}
+
+
+.error{
+    color: #dd8383;
+    margin-bottom: 5px;
+    text-align: center;
+  }

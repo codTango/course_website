@@ -27,6 +27,17 @@ $('.form').find('input, textarea').on('keyup blur focus', function (e) {
 
 });
 
+if (document.getElementById("page").value=="login") {
+    $("#signup-tab").removeClass("active");
+    $("#login-tab").addClass('active');
+
+
+    $('.tab-content > div').not("#login").hide();
+
+    $("#login").fadeIn(600);
+
+}
+
 $('.tab a').on('click', function (e) {
   
   e.preventDefault();

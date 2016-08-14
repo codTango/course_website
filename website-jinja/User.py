@@ -18,6 +18,7 @@ class User(ndb.Model):
 	schedule = ndb.BlobProperty()
 	courseinfo = ndb.JsonProperty()	# {course1:{"Course Website":"www.xxx.com","Homework":"hw.com"}, course2:{...}}
 	joined_time = ndb.DateTimeProperty(auto_now_add=True)
+	rememberme = ndb.IntegerProperty()
 
 ########### validation #####################
 import hashlib
@@ -52,6 +53,7 @@ def valid_id(HASH):
 ########### validation #####################
 
 
+
 ########## login/signup #####################
 def query_id(uid):
 	qry = User.query().filter(User.userid == uid)
@@ -72,7 +74,6 @@ def login(id,pw):
 		user = user[0]
 		if user.password == pw:
 			return user
-
 
 def signup(name,id,email,pw):
 	user = User(name=name,userid=id,email=email,password=pw)

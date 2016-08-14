@@ -22,11 +22,14 @@ import sys
 from User import *
 import json
 from webapp2_extras import routes
+from random import getrandbits as bits
 
 FOLDERNAME = "templates"  # only for self.render(template)   e.g. html files
 
 template_dir = os.path.join(os.path.dirname(__file__), FOLDERNAME)
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=True)
+
+
 
 
 class Handler(webapp2.RequestHandler):
@@ -62,12 +65,14 @@ class MainHandler(Handler):
         if 'login' in self.request.POST:
             user = login(uid, pw)
             if user:
-                ck = text_hash(user.userid)
-                self.set_ck(str("id=%s" % ck))
-                # title = "%s's Fall 2016"%user.name
-                self.redirect('/%s' % uid)
+                if self.request.get("rememberme"):
+                    ck = bits(11)
+                    user.rememberme = ck
+                    user.put()
+                    self.set_ck(str("rememberme=%s" % ck))
+                self.load("setup.html",user=user,active="settings")
             else:
-                self.render('signup.html', loginerror='Invalid username and/or password.', loginactive=True)
+                self.render('signup.html', loginerror='Invalid username and/or password.', page="login")
         elif 'signup' in self.request.POST:
             name = self.request.get('name').capitalize()
             email = self.request.get('email')
@@ -108,7 +113,11 @@ class CourseHandler(Handler):
 class SettingsHandler(Handler):
     def get(self, userid):
         user = query_id(userid)[0]
-        self.load('setup.html', user=user, active="settings")
+        if int(self.get_ck("rememberme"))==user.rememberme:
+            self.load('setup.html', user=user, active="settings")
+        else:
+            self.render('signup.html',page="login")
+
 
     def post(self, userid):
         user = query_id(userid)[0]
@@ -155,6 +164,7 @@ class Image(webapp2.RequestHandler):
             self.response.out.write(user.schedule)
         else:
             self.response.out.write('No image')
+
 
 
 app = webapp2.WSGIApplication([
