@@ -15,9 +15,6 @@ if (!String.prototype.format) {
 
 
 $(document).ready(function () {
-    $("#popup").show();
-    // TODO: post to login api
-    // TODO: set rememberme cookie
 
     /* add url row */
     $("section").on("click", "td.add", function () {
@@ -56,7 +53,7 @@ $(document).ready(function () {
         $(this).append("<img src='/images/delete.png' class='icon'/>");
     });
 
-    /*TODO: edit courseid*/
+    /* edit courseid*/
     $("section").on("click", "img.edit", function () {
         var input = $(this).parent().next();
         var input_value = $(input).attr("value");

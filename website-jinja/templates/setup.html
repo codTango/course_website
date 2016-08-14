@@ -3,7 +3,6 @@
 
 {% block box %}
 
-{#    TODO: popup window for password promt #}
 
 	<form name="update" method="post">
         <section name="course-section">
@@ -39,7 +38,6 @@
                             <input type="hidden" name="course{{ i }}" value="{{ course.upper() }}">
                         </h2>
                         <table align="center" border="0">
-            {#            @TODO: add button#}
                             {% set btni=0 %}
                             {% for title in urls %}
                                 <tr>
@@ -82,31 +80,23 @@
         </section>
     </form>
 
+    <form name="general" method="post">
+        <section name="general-section">
+            <h1 class="section-title">General</h1>
+            <table class="clear" align="center">
+                {% for title,value in [("Name",user.name),("Username",user.userid),("Email",user.email),("Reset Password","")] %}
+                <tr>
+                    <td class="title" align="right">{{ title }}</td>
+                    <td align="left"><input type="text" class="url" value="{{ value }}"></td>
+                </tr>
+                {% endfor %}
+            </table>
+        <div class="clear">
+		    <button name="general" class="hvr-rectangle-out btn" type="submit" value="Submit">UPDATE</button>
+        </div>
+        </section>
+    </form>
 
-
-
-
-{#	{% else %}#}
-{#        @TODO: modify courses setup and remove this section#}
-{#	<form method="post">#}
-{#		<ol>#}
-{#			<li>Enter your courses here</li>#}
-{#			<li>Separate by space</li>#}
-{#			<li>Example: </li>#}
-{#			<li class="code">CS125 MATH231</li>#}
-{#			<li>Anything that can't be understood or doesn't follow the format will be ignored</li>#}
-{#		</ol>#}
-{#		<br>#}
-{#		<textarea name="course-list" rows="15" cols="60" > Hello {{user.name}}!#}
-{##}
-{#		,d88b.d88b,#}
-{#		88888888888#}
-{#		`Y8888888Y'#}
-{#		  `Y888Y'    - Angelica -#}
-{#		    `Y'</textarea>#}
-{#		<button name="setup" class="hvr-rectangle-out" type="submit" value="Submit">NEXT</button>#}
-{#	</form>#}
-{#	{% endif %}#}
 
 
     <script type="text/javascript" src="/js/settings.js"></script>
