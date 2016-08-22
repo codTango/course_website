@@ -32,12 +32,12 @@ def make_salt():
 def pw_hash(id,pw,salt=None):
 	if not salt:
 		salt = make_salt()
-	h = hashlib.sha256(name+pw+salt).hexdigest()
+	h = hashlib.sha256(id+pw+salt).hexdigest()
 	return '%s|%s'%(h,salt)
 
 def valid_pw(id,pw,HASH):
 	salt = HASH.split('|')[1]
-	if pw_hash(name,pw,salt) == HASH:
+	if pw_hash(id,pw,salt) == HASH:
 		return True
 
 
@@ -72,11 +72,11 @@ def query_key(key):
 
 def login(id,pw):
 	user = query_id(id)
-	#if valid_pw(id,pw):
-	if user and user.password==pw:
+	if user and valid_pw(id,pw,user.password):
 		return user
 
 def signup(name,id,email,pw):
+	pw = pw_hash(id,pw)
 	user = User(name=name,userid=id,email=email,password=pw)
 	user_key=user.put()
 	return user_key

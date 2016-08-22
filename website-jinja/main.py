@@ -137,6 +137,8 @@ class SettingsHandler(Handler):
     def post(self, userid):
         user = query_id(userid)
         if 'update' in self.request.POST:       # update courseinfo
+            # @TODO: make sure course order doens't change
+            # @TODO: make courses sortable
             args = self.request.arguments()
             total = len(filter(lambda x: "course" in x, args))
             btn_args = filter(lambda x: "btn" in x and "url" not in x, args)
@@ -160,6 +162,9 @@ class SettingsHandler(Handler):
             user.schedule = img
             user.put()
             self.redirect('/%s'%userid)
+        elif 'general' in self.request.POST:
+            # @TODO: user information update
+            pass
         else:
             self.write("nothing?")
 

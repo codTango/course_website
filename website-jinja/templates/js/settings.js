@@ -80,12 +80,14 @@ $(document).ready(function () {
 
 
     /* add course*/
+    // @TODO: adding new course not working: newcourse index not correct
+
     // add new course function
-    var new_course_id = document.getElementsByTagName("table").length;
+    var new_course_id = document.getElementsByClassName("course").length;
     var default_info_list = ['Course Website', 'Homework', 'Calendar', 'Syllabus', 'Grades'];
 
     function new_course() {
-        var new_course = '<table class="clear" align="center"> \
+        var new_course = '<table class="course clear" align="center"> \
             <tr> \
                 <td><input type="hidden" name="new" value="{0}"></td> \
                 <td class="title">Course ID</td> \

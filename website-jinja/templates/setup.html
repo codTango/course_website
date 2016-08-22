@@ -2,14 +2,17 @@
 {% set default_info_list = ['Course Website','Homework','Calendar','Syllabus','Grades'] %}
 
 {% block box %}
+{# inside the green box #}
 
-
+    {# courseinfo update section #}
 	<form name="update" method="post">
         <section name="course-section">
             <h1 class="section-title">Courses</h1>
             <div class="section-add hvr-rectangle-out btn" id="add-course">Add Course</div>
+            {# if new user #}
             {%  if not courses %}
-                <table class="clear" align="center">
+                {# new course to be added == add course button pressed #}
+                <table class="clear course" align="center">
                     <tr>
                         <td></td>
                         <td class="title">Course ID</td>
@@ -28,7 +31,9 @@
                             <td class="add btn" align="right"><img src="/images/add.png" class="icon"/></td>
                         </tr>
                 </table>
+            {# if not new user #}
             {% else %}
+                {# list courses #}
                 {% set i=0 %}
                 {% for course in courses %}
                     {% set urls=courses[course] %}
@@ -37,7 +42,7 @@
                             <span class="right"><img src="/images/edit.png" class="edit icon"><img src="/images/delete.png" class="delete icon"></span>
                             <input type="hidden" name="course{{ i }}" value="{{ course.upper() }}">
                         </h2>
-                        <table align="center" border="0">
+                        <table class="clear course" align="center" border="0">
                             {% set btni=0 %}
                             {% for title in urls %}
                                 <tr>
@@ -61,6 +66,7 @@
         </div>
 	</form>
 
+    {# schedule upload section #}
     <form name="upload" method="post" enctype="multipart/form-data">
         <section name="schedule-section">
             <h1 class="section-title">Schedule</h1>
@@ -80,6 +86,7 @@
         </section>
     </form>
 
+    {# general info update section #}
     <form name="general" method="post">
         <section name="general-section">
             <h1 class="section-title">General</h1>
@@ -101,6 +108,9 @@
         <section name="theme-section">
             <h1 class="section-title">Theme</h1>
 {#            @TODO: themes #}
+            <div class="clear" name="themes">
+                Coming soon......
+            </div>
         </section>
     </form>
 
