@@ -86,6 +86,8 @@ class MainHandler(Handler):
                 user_key = signup(name, uid, email, pw)
                 if user_key:
                     self.redirect('/%s' % uid)
+                else:
+                    self.write("signup failed")
         else:
             self.write("???")
 
@@ -111,7 +113,8 @@ class CourseHandler(Handler):
 class SettingsHandler(Handler):
     def get(self, userid):
         user = query_id(userid)
-        if int(self.get_ck("rememberme"))==user.rememberme:
+        remck = self.get_ck("rememberme")
+        if remck and int(remck)==user.rememberme:
             self.load('setup.html', user=user, active="settings")
         else:
             self.render('signup.html',page="login")

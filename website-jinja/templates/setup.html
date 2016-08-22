@@ -15,7 +15,7 @@
                         <td class="title">Course ID</td>
                         <td align="left" class="url"><input name="course0" placeholder="e.g. CS125"></td>
                     </tr>
-                    {% for i in range(default_info_list.length) %}
+                    {% for i in range(default_info_list|length) %}
                         {% set title=default_info_list[i] %}
                         <tr>
                             <input type="hidden" name="bid0-{{ i }}" value="{{i}}">
@@ -94,6 +94,12 @@
         <div class="clear">
 		    <button name="general" class="hvr-rectangle-out btn" type="submit" value="Submit">UPDATE</button>
         </div>
+        </section>
+    </form>
+
+    <form name="theme" method="post">
+        <section name="theme-section">
+            <h1 class="section-title">Theme</h1>
         </section>
     </form>
 

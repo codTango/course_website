@@ -60,7 +60,7 @@ def query_id(uid):
 		qry = User.query().filter(User.userid == uid)
 		return qry.fetch()[0]
 	except:
-		raise Exception('User not found')
+		return None
 
 def query_email(em):
 	qry = User.query().filter(User.email == em)
@@ -73,10 +73,8 @@ def query_key(key):
 def login(id,pw):
 	user = query_id(id)
 	#if valid_pw(id,pw):
-	if len(user)>0:
-		user = user[0]
-		if user.password == pw:
-			return user
+	if user and user.password==pw:
+		return user
 
 def signup(name,id,email,pw):
 	user = User(name=name,userid=id,email=email,password=pw)
