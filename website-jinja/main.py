@@ -23,6 +23,8 @@ from User import *
 import json
 from webapp2_extras import routes
 from random import getrandbits as bits
+import time
+import datetime
 
 FOLDERNAME = "templates"  # only for self.render(template)   e.g. html files
 
@@ -43,11 +45,21 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
-    def set_ck(self, cookie):
-        self.response.headers.add_header('Set-Cookie', cookie)
+    def set_ck(self, name,value,expires=None):
+        self.response.set_cookie(name, value, expires=expires,path='/')
 
     def get_ck(self, cookie):
         return self.request.cookies.get(cookie)
+
+    def rememberme(self,user,temp=True):
+        ck = bits(11)
+        user.rememberme = ck
+        user.put()
+        if temp:
+            exp = None
+        else:
+            exp = (datetime.datetime.now() + datetime.timedelta(weeks=50))
+        self.set_ck("rememberme",str(ck),expires=exp)
 
     def load(self, page, user, active='home'):
         courses = (json.loads(user.courseinfo) if user.courseinfo else {})
@@ -66,13 +78,11 @@ class MainHandler(Handler):
             user = login(uid, pw)
             if user:
                 if self.request.get("rememberme"):
-                    ck = bits(11)
-                    user.rememberme = ck
-                    user.put()
-                    self.set_ck(str("rememberme=%s" % ck))
+                    self.rememberme(user,temp=False)
                 else:
-                    pass # TODO: session cookie
-                self.load("setup.html",user=user,active="settings")
+                    self.rememberme(user)
+                time.sleep(1)
+                self.redirect("/%s/settings"%uid)
             else:
                 self.render('signup.html', loginerror='Invalid username and/or password.', page="login")
         elif 'signup' in self.request.POST:
@@ -85,6 +95,7 @@ class MainHandler(Handler):
             else:
                 user_key = signup(name, uid, email, pw)
                 if user_key:
+                    self.rememberme(user_key.get())
                     self.redirect('/%s' % uid)
                 else:
                     self.write("signup failed")
@@ -116,11 +127,12 @@ class SettingsHandler(Handler):
     def get(self, userid):
         user = query_id(userid)
         remck = self.get_ck("rememberme")
+        if not user:
+            self.write("Registering... Please refresh in five seconds. Thanks! :P")
         if remck and int(remck)==user.rememberme:
             self.load('setup.html', user=user, active="settings")
         else:
             self.render('signup.html',page="login")
-
 
     def post(self, userid):
         user = query_id(userid)
