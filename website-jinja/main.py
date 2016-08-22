@@ -95,7 +95,9 @@ class MainHandler(Handler):
 class UserHandler(Handler):
     def get(self, userid):
         user = query_id(userid)
-        if user.courseinfo:
+        if not user:
+            self.write("User Not Found")
+        elif user.courseinfo:
             self.load('main.html', user)
         else:
             self.redirect('/%s/settings' % userid)
