@@ -80,8 +80,6 @@ $(document).ready(function () {
 
 
     /* add course*/
-    // @TODO: adding new course not working: newcourse index not correct
-
     // add new course function
     var new_course_id = document.getElementsByClassName("course").length;
     var default_info_list = ['Course Website', 'Homework', 'Calendar', 'Syllabus', 'Grades'];

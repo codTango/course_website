@@ -169,11 +169,6 @@ class SettingsHandler(Handler):
             self.write("nothing?")
 
 
-class SubdomainHandler(Handler):
-    def get(self, subdomain):
-        self.write("my spot yay!\n")
-        self.write(subdomain)
-
 # Handles image fetch
 class Image(webapp2.RequestHandler):
     def get(self):
