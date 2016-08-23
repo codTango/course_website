@@ -25,6 +25,7 @@ from webapp2_extras import routes
 from random import getrandbits as bits
 import time
 import datetime
+import logging
 
 FOLDERNAME = "templates"  # only for self.render(template)   e.g. html files
 
@@ -77,7 +78,7 @@ class MainHandler(Handler):
         if 'login' in self.request.POST:
             user = login(uid, pw)
             if user:
-                if self.request.get("rememberme"):
+                if self.request.get("rememberme"): 
                     self.rememberme(user,temp=False)
                 else:
                     self.rememberme(user)
@@ -148,7 +149,9 @@ class SettingsHandler(Handler):
                 if courseID:
                     btns = {}
                     btn_lst = filter(lambda x: "btn%d" % i in x, btn_args)
-                    for btn in btn_lst:
+                    for btn_ind in range(len(btn_lst)):
+                        logging.info("btn_ind:%d"%btn_ind)
+                        btn = "btn%d-%d"%(i,btn_ind)
                         btn_name = self.request.get(btn)
                         btn_url = self.request.get(btn.replace("btn", "btn_url"))
                         if btn_name and btn_url:

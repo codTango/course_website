@@ -22,7 +22,8 @@ $(document).ready(function () {
         var last_btn = $(row).prev().children(":last").children();
         if (last_btn.length > 0) {
             var last_btn_number = last_btn.attr("name").slice(7).split("-");
-            var new_btn_number = last_btn_number[0] + "-" + (last_btn_number[1] + 1);
+            var new_btn_number = last_btn_number[0] + "-" + (parseInt(last_btn_number[1]) + 1);
+            console.log(new_btn_number);
         } else {
             var course_number = $(row).parent().parent().prev().children(":last").attr("name").slice(6);
             var new_btn_number = course_number + "-" + 0;
