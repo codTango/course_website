@@ -64,8 +64,9 @@ class Handler(webapp2.RequestHandler):
 
     def load(self, page, user, active='home'):
         courses = (json.loads(user.courseinfo) if user.courseinfo else {})
+        urls = filter(lambda tup: tup[0]==active, courses)[0][1]
         name = user.name
-        self.render(page, user=user, name=name, courses=courses, active=active)
+        self.render(page, user=user, name=name, courses=courses, active=active,urls=urls)
 
 
 class MainHandler(Handler):
@@ -183,12 +184,31 @@ class Image(webapp2.RequestHandler):
         else:
             self.response.out.write('No image')
 
+class Datafix(Handler):
+    def get(self,userid):
+        user = query_id(userid)
+        if user and user.courseinfo:
+            if type(user.courseinfo)==dict:     # if user's courseinfo is still a dictionary
+                new_lst = []                    # [(course1,[...]),(course2,[...])]
+                for course in user.courseinfo:
+                    new_btns = []               # [(btn1,link1),(btn2,link2)]
+                    urls = user.courseinfo[course]
+                    for btn in urls:         # course == {btn1:link1,btn2,link2}
+                        new_btns.append((btn,urls[btn]))
+                    new_lst.append((course,new_btns))
+                user.courseinfo = new_btns
+                self.write("new_list:"+user.courseinfo)
+
+            elif type(user.courseinfo)==list:
+                self.write("courseinfo is already in list")
+            else:
+                self.write("what type it is? "+ type(user.courseinfo))
+        else:
+            self.write("user not found or user does not have courseinfo")
 
 
 app = webapp2.WSGIApplication([
-    routes.DomainRoute('<userid>.kiwi-ninja.appspot.com',
-                       [webapp2.Route('/', handler=UserHandler), webapp2.Route('/settings', handler=SettingsHandler),
-                        webapp2.Route('/<courseid>', CourseHandler)]),
     ('/', MainHandler), ('/img', Image), webapp2.Route('/<userid>', UserHandler),
-    webapp2.Route('/<userid>/settings', SettingsHandler), webapp2.Route('/<userid>/<courseid>', CourseHandler)
+    webapp2.Route('/<userid>/settings', SettingsHandler), webapp2.Route('/<userid>/<courseid>', CourseHandler),
+    webapp2.Route('/<userid>/datafix', Datafix)
 ], debug=True)
