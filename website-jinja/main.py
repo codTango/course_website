@@ -143,11 +143,11 @@ class SettingsHandler(Handler):
             args = self.request.arguments()
             total = len(filter(lambda x: "course" in x, args))
             btn_args = filter(lambda x: "btn" in x and "url" not in x, args)
-            courseinfo = {}
+            courseinfo = []
             for i in range(total):
                 courseID = self.request.get("course%d" % i)
                 if courseID:
-                    btns = {}
+                    btns = []
                     btn_lst = filter(lambda x: "btn%d" % i in x, btn_args)
                     for btn_ind in range(len(btn_lst)):
                         logging.info("btn_ind:%d"%btn_ind)
@@ -155,8 +155,8 @@ class SettingsHandler(Handler):
                         btn_name = self.request.get(btn)
                         btn_url = self.request.get(btn.replace("btn", "btn_url"))
                         if btn_name and btn_url:
-                            btns[btn_name] = btn_url
-                    courseinfo[courseID] = btns
+                            btns.append((btn_name,btn_url))
+                    courseinfo.append((courseID,btns))
             user.courseinfo = json.dumps(courseinfo)
             user.put()
             self.redirect("/%s" % userid)
